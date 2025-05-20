@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import getWeather from "../services/getWeather";
 import getUV from "../services/getUV";
 import getAirPollution from "../services/getAirPollution";
+import { generateChatResponse } from "../services/getGemini";
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ router.get("/data", async (req, res) => {
             getUV(now),
             getAirPollution(sidoName, cityName),
         ]);
+        const evaluation = await generateChatResponse(weatherData);
         const result = {
             weather: {
                 ...weatherData,
@@ -24,6 +26,7 @@ router.get("/data", async (req, res) => {
             airPollution: {
                 ...airPollution,
             },
+            message: evaluation,
         };
         res.json(result);
     } catch (error) {
