@@ -9,7 +9,7 @@ export async function generateChatResponse(weatherData: any[]) {
     입력받은 날씨정보에 대해 한줄 평을 남겨주세요.\n
     친근한느낌으로 해주세요\n
     지역명은 제외해주세요\n
-    25자 이내로 해주세요.\n
+    15자 이내로 해주세요.\n
     다음은 날씨 정보입니다:\n
     ${JSON.stringify(weatherData, null, 2)}
     `;
