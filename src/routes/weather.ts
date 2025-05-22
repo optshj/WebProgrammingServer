@@ -23,8 +23,7 @@ router.get("/data", async (req, res) => {
             getUV(now),
             getAirPollution(sidoName, cityName),
         ]);
-        const evaluation = await generateChatResponse(weatherData);
-        const result = {
+        let result = {
             weather: {
                 ...weatherData,
                 UV: uvData,
@@ -32,8 +31,12 @@ router.get("/data", async (req, res) => {
             airPollution: {
                 ...airPollution,
             },
-            message: evaluation,
+            message: "",
         };
+        const evaluation = await generateChatResponse(result);
+        if (evaluation) {
+            result.message = evaluation;
+        }
         res.json(result);
     } catch (error) {
         console.error(error);
